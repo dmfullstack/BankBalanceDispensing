@@ -35,13 +35,13 @@ The project is compatible with Gradle.
 Please extract the zip file to appropriate folder. For Example: It is extracted at C:\
 
 Please goto command line run appropriate command as required:
-cd discovery_bank
+cd BankBalanceDispensing
 
 Maven Command to build & run the application. 
 ------------------
 mvn clean install
 
-The maven clears the \discovery_bank\target directory and regenerates compiled java class files inside folder \discovery_bank\target
+The maven clears the \BankBalanceDispensing\target directory and regenerates compiled java class files inside folder \BankBalanceDispensing\target
 It runs the Junit Test Case and prints the test result.
 
 
@@ -52,7 +52,7 @@ It runs the Junit Test Case and prints the test result.
 	 -Maven should be installed and working properly inside eclipse.
 	 -Java version used 1.8.0_201
 
- Open Eclipse -> File -> Import -> Import existing Maven project into workspace -> Select the \discovery_bank file -> Finish
+ Open Eclipse -> File -> Import -> Import existing Maven project into workspace -> Select the \BankBalanceDispensing file -> Finish
  
  please run following command:
  mvn clean install.
