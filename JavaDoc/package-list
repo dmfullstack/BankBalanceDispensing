@@ -1,0 +1,8 @@
+com.sa.discovery.dispensing
+com.sa.discovery.dispensing.controller
+com.sa.discovery.dispensing.entity
+com.sa.discovery.dispensing.exception
+com.sa.discovery.dispensing.model
+com.sa.discovery.dispensing.repository
+com.sa.discovery.dispensing.service
+com.sa.discovery.dispensing.tests

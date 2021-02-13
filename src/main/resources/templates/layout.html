@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+	font-size: 16px;
+	font-family: Verdana, sans-serif;
+}
+
+table {
+	width: 540px;
+	margin: 20px auto;
+	border-collapse: collapse;
+}
+
+th, td {
+	width: 180px;
+	box-sizing: border-box;
+	border: 1px solid #e9eae8;
+	padding: 8px 20px;
+}
+
+tbody tr:nth-child(odd) {
+	background: #f8f8f8;
+}
+
+.score {
+	text-align: right;
+}
+
+th {
+	cursor: pointer;
+}
+
+th:after {
+	content: '\f0dc';
+	font-family: FontAwesome;
+	font-style: 12px;
+	color: #ccc;
+	float: left;
+	padding-top: 4px;
+	font-weight: normal;
+}
+
+th.asc:after {
+	content: '\f0de';
+	font-family: FontAwesome;
+	color: #000;
+}
+
+th.desc:after {
+	content: '\f0dd';
+	font-family: FontAwesome;
+	color: #000;
+}
+</style>
+<script>
+	function hideError() {
+		var x = document.getElementById("err");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} else {
+			x.style.display = "none";
+		}
+	}
+
+	function hideSuccess() {
+		var x = document.getElementById("succ");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} else {
+			x.style.display = "none";
+		}
+	}
+</script>
+</head>
+<body>
+
+	<!-- Main Navigation -->
+	<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+		<marquee>
+			<a class="navbar-brand" th:href="@{/}">Bank Balance and
+				Dispensing System</a>
+		</marquee>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbar" aria-controls="navbar" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbar">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item active"><a class="nav-link" th:href="@{/}">Home</a>
+				</li>
+				<li class="nav-item" th:if="${client != null}"><a
+					class="nav-link"
+					th:href="@{'/user/clientaccounts.html/'+${client.client_id}}">User</a>
+				</li>
+				<li class="nav-item" th:if="${client != null}"><a
+					class="nav-link"
+					th:href="@{'/system/highestAccounts.html/'+${client.client_id}}">System</a>
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+
+	<div id="succ" th:if="${successMessage != null}"
+		class="alert alert-success alert-dismissible fade show">
+		<ul>
+			<li th:text="${successMessage}"></li>
+		</ul>
+		<button type="button" class="close" aria-label="Close"
+			onclick="hideSuccess()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+
+	<div id="err" th:if="${errorMessage != null}"
+		class="alert alert-warning alert-dismissible fade show">
+		<ul>
+			<li th:text="${errorMessage}"></li>
+		</ul>
+		<button type="button" class="close" aria-label="Close"
+			onclick="hideError()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+
+
+	<!-- Content Section -->
+	<section layout:fragment="content">
+		<p>This is filled by the content template.</p>
+	</section>
+
+	<!-- Footer -->
+	<footer class="container py-5">
+		<div class="row">
+			<div class="col-md-12">
+				<p class="text-muted">Bank Balance and Dispensing
+					System. &copy; 2021, IT Support & HelpDesk +2712345678</p>
+			</div>
+		</div>
+	</footer>
+	<script>
+		(function() {
+			'use strict';
+			var ths = document.getElementsByTagName('th');
+			var sortOrder = 1;
+
+			function rebuildTbody(rows) {
+				var tbody = document.querySelector('tbody');
+				var i;
+				while (tbody.firstChild) {
+					tbody.removeChild(tbody.firstChild);
+				}
+
+				for (i = 0; i < rows.length; i++) {
+					tbody.appendChild(rows[i]);
+				}
+			}
+
+			function updateClassName(th) {
+				var k;
+				for (k = 0; k < ths.length; k++) {
+					ths[k].className = '';
+				}
+				th.className = sortOrder === 1 ? 'asc' : 'desc';
+			}
+
+			function compare(a, b, col, type) {
+				var _a = a.children[col].textContent;
+				var _b = b.children[col].textContent;
+				if (type === "number") {
+					_a = _a * 1;
+					_b = _b * 1;
+				} else if (type === "string") {
+					_a = _a.toLowerCase();
+					_b = _b.toLowerCase();
+				}
+				if (_a < _b) {
+					return -1;
+				}
+				if (_a > _b) {
+					return 1;
+				}
+				return 0;
+			}
+
+			function sortRows(th) {
+				var rows = Array.prototype.slice.call(document
+						.querySelectorAll('tbody > tr')); // NodeList
+				var col = th.cellIndex;
+				var type = th.dataset.type; // string, number
+
+				rows.sort(function(a, b) { // tr, tr
+					return compare(a, b, col, type) * sortOrder;
+				});
+				return rows;
+			}
+
+			function setup() {
+				var i;
+				for (i = 0; i < ths.length; i++) {
+					ths[i].addEventListener('click', function() {
+						var rows;
+						rows = sortRows(this);
+						rebuildTbody(rows);
+						updateClassName(this);
+						sortOrder *= -1;
+					});
+				}
+			}
+
+			setup();
+		})();
+	</script>

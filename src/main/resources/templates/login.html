@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Bank Balance and Dispensing System</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+        <div class="container">
+        	<div class="row">
+        		<span height="10px"></span>
+        	</div>
+            <div class="row">
+            	<div class="col-md-3">
+            	<span height="10px"></span>
+            	</div>
+                <div class="col-md-7">
+               	 	<form  method="POST" th:action="@{/user/clientaccounts.html}">
+                	<div class="row">
+						
+						 	<div class="col-md-4">
+							 <label for="sel1">Select Client:</label>
+							</div>
+						 
+							<div class="col-md-6">
+							<select name="userid" class="form-control">
+								<option th:each="client : ${clients}"
+									th:value="${client.client_id}" th:text="${client.name}"
+									th:selected="${selectedClient}"></option>
+							</select> 
+							</div>
+							
+							
+							<div class="col-md-4">
+							<span/>
+							</div>
+								<div class="col-md-6" style="margin-top: 35px">
+									<button type="submit" class="btn btn-primary">Submit</button>
+								</div>
+									
+						</div>
+						</form>
+						
+						
+				</div>
+				
+				
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+</html>
+      
+
+        

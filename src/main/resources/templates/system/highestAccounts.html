@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{system/system}">
+<body>
+	<div layout:fragment="tabscontent">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="container">
+						<ul class="nav nav-tabs nav-justified">
+							<li class="nav-item active"><a class="nav-link active"
+								th:href="@{'/system/highestAccounts.html/'+${client.client_id}}">Reporting - Highest
+									Accounts</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{'/system/aggregateFinancial.html/'+${client.client_id}}">Reporting - Aggregate
+									Financial </a></li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="margin-top: 35px" class="container">
+				<div style="margin-top: 35px">
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th data-type="number">&nbsp;&nbsp;Client Id:</th>
+							<th data-type="String">&nbsp;&nbsp;Last Name:</th>
+							<th data-type="number">&nbsp;&nbsp;Account Number:</th>
+							<th data-type="String">&nbsp;&nbsp;Description:</th>
+							<th data-type="String">&nbsp;&nbsp;Balance:</th>
+
+						</tr>
+							</thead>
+							<tbody>
+						<tr th:each="account : ${accountReports}">
+							<td th:text="${account.clientId}">Id</td>
+							<td th:text="${account.surname}">Id</td>
+							<td th:text="${account.accountNumber}">Id</td>
+							<td th:text="${account.description}">First name</td>
+							<td
+								th:text="${#numbers.formatDecimal(account.balance, 0, 'COMMA', 2, 'POINT')}">Last
+								Name</td>
+
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+					<div align="right">
+				<p>
+					<button onclick="goBack()">Back</button>
+				</p>
+
+				<script>
+					function goBack() {
+						window.history.back();
+					}
+				</script>
+			</div>
+		</div>
+</body>
+</html>

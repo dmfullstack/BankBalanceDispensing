@@ -1,0 +1,70 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{user/index}">
+<body>
+	<div layout:fragment="tabscontent">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="container">
+						<ul class="nav nav-tabs nav-justified">
+							<li class="nav-item active"><a class="nav-link active"
+								th:href="@{'/user/clientaccounts.html/'+${client.client_id}}">Client
+									Accounts</a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{'/user/currencyrandvalues.html/'+${client.client_id}}">Accounts
+									Currency </a></li>
+							<li class="nav-item"><a class="nav-link"
+								th:href="@{'/user/withdraw.html/'+${client.client_id}}">ATM - WithDraw</a></li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div>
+				<font size="22"><b><center>
+							<p>Transactional Account Balances</p>
+						</center></b></font></font>
+			</div>
+
+			<div style="margin-top: 35px">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th data-type="number">&nbsp;&nbsp;Account Number</th>
+							<th data-type="string">&nbsp;&nbsp;Account Type</th>
+							<th data-type="string">&nbsp;&nbsp;Account Balance</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="account : ${accounts}">
+							<td th:text="${account.accountNumber}">Id</td>
+							<td th:text="${account.accountType}">First name</td>
+							<td
+								th:text="${#numbers.formatDecimal(account.accountBalance, 0, 'COMMA', 2, 'POINT')}">Last
+								Name</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div align="right">
+				<p>
+					<button onclick="goBack()">Back</button>
+				</p>
+
+				<script>
+					function goBack() {
+						window.history.back();
+					}
+				</script>
+			</div>
+		</div>
+</body>
+</html>
