@@ -1,7 +1,7 @@
  ----------------
 |Design Folder: |
  ----------------
-The design folder contains Class Diagrams of Java Classes and Generated Java Classes from Schema.
+The design folder contains Class Diagrams of Java Classes 
 
 
  ----------------
@@ -39,10 +39,14 @@ cd BankBalanceDispensing
 
 Maven Command to build & run the application. 
 ------------------
-mvn clean install
+mvn clean install spring-boot:run
 
-The maven clears the \BankBalanceDispensing\target directory and regenerates compiled java class files inside folder \BankBalanceDispensing\target
-It runs the Junit Test Case and prints the test result.
+The application swagger ui is at:
+http://localhost:8080/swagger-ui.html
+
+The application main  screen: 
+http://localhost:8080/
+
 
 
  ----------
@@ -54,9 +58,8 @@ It runs the Junit Test Case and prints the test result.
 
  Open Eclipse -> File -> Import -> Import existing Maven project into workspace -> Select the \BankBalanceDispensing file -> Finish
  
- please run following command:
+ please right click on project run following command:
  mvn clean install.
- 
   
  Right click on project -> Run as Spring Boot App
  
